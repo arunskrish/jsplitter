@@ -5,11 +5,18 @@ jobs:
     runs-on: ubuntu-latest
     name: A job to say hello
     steps:
-    - name: Hello world action step
-      id: hello
-      uses: actions/hello-world-javascript-action@v1.1
+    # Checks-out your repository under $GITHUB_WORKSPACE, so auto-minify job can access it
+    - uses: actions/checkout@v2
+
+    - name: Auto Minify
+      uses: nizarmah/auto-minify@master
+
+    # Auto commits minified files to the repository
+    # Ignore it if you don't want to commit the files to the repository 
+    - name: Auto committing minified files
+      uses: stefanzweifel/git-auto-commit-action@v3.0.0
       with:
-        who-to-greet: 'Mona the Octocat'
-    # Use the output from the `hello` step
-    - name: Get the output time
-      run: echo "The time was ${{ steps.hello.outputs.time }}"
+        commit_message: "Github Action: Auto Minified JS and CSS files"
+        branch: ${{ github.ref }}
+
+  

@@ -2,7 +2,7 @@
  * @Author: arunkri
  * @Date:   2020-02-05T20:51:54-08:00
  * @Last modified by:   arunkri
- * @Last modified time: 2020-11-14T20:14:50-08:00
+ * @Last modified time: 2020-11-15T14:42:19-08:00
  */
 (function( $ ) {
     $.fn.jSplitter = function(opts) {
@@ -28,10 +28,12 @@
             var leftdiv = $('#'+ settings['leftdiv'])
             var rightdiv = $('#'+ settings['rightdiv'])
 
+            // Cookie based on splitter div id.
             settings['cookie'] = settings['cookie'] + '_' + $(divider).attr('id')
 
             var dividerwidth = $(divider).width()
 
+            // Check if user-select can be disabled during dragging.
             var disableLeftUserSel = true
             var disableRightUserSel = true
             if ($(leftdiv).css('user-select') == 'none' ||
@@ -43,15 +45,19 @@
                 disableRightUserSel = false
             }
 
+            // Set drag cursor on divider
             $(divider).css('cursor', 'col-resize')
 
             // console.log($(leftdiv).height())
             var initWidths = function() {
+                // If divider is not visible, no dragging. If applied for website navbar,
+                // if divider is also hidden for small screen, we won't initialize dragging.
                 if (! $(divider).is(":visible")){
                     // console.log("Divider is not visible")
                     $(rightdiv).css('margin-left', '0px')
                     return
                 } else {
+                    // If drag position can persist, load previously stored width.
                     if (settings['persist'] && localStorage.getItem(settings['cookie']) != null) {
                         var width = parseInt(localStorage.getItem(settings['cookie']))
                         if (settings['flex']) {
@@ -63,6 +69,7 @@
                         }
 
                     } else {
+                        // For non-flex, initialize right div margin to left div width.
                         if (! settings['flex']) {
                             var width = $(leftdiv).width()
                             $(divider).css('margin-left', width + "px")
@@ -78,7 +85,6 @@
             var minWidth = $(leftdiv).css('min-width')
             console.log('Min/Max - '+maxWidth + ", "+minWidth)
             var startPos = 0
-            // console.log(maxWidth)
 
             var startSplitMouse = function(evt) {
                 // console.log("from startSplitMouse" + evt["pageX"])
@@ -148,7 +154,7 @@
 
             $(divider).bind("mousedown", startSplitMouse);
 
-            // If window is resized, re-initialize widths. If
+            // If window is resized, re-initialize widths.
             $( window ).resize(function() {
                 initWidths()
             })

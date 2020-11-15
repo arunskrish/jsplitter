@@ -52,7 +52,7 @@
                     $(rightdiv).css('margin-left', '0px')
                     return
                 } else {
-                    if (settings['persist']) and localStorage.getItem(settings['cookie']) != null) {
+                    if (settings['persist'] and localStorage.getItem(settings['cookie']) != null) {
                         var width = parseInt(localStorage.getItem(settings['cookie']))
                         if (settings['flex']) {
                             $(leftdiv).css('flex', '0 0 '+width+'px')

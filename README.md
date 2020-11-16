@@ -1,5 +1,5 @@
 # jsplitter
-Jquery based splitter to create drag expandable side bars
+Jquery based splitter plugin that can split your content with a movable splitter between them. 
 
 # Documentation and usage
 https://jsplitter.dilif.com/
